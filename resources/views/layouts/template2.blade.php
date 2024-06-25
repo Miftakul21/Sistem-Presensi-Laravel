@@ -221,13 +221,12 @@
         },
     });
 
-
     $('#table-divisi').on('click', '#btn-delete-divisi', function() {
         const id = $(this).data('id');
         // alert(id);
         Swal.fire({
             title: "Anda ingin hapus?",
-            text: "Data terhapus tidak dapa kembali",
+            text: "Data terhapus tidak dapat kembali",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -256,7 +255,44 @@
             }
         });
 
-    })
+    });
+
+    $('#table-location').on('click', '#btn-delete-location', function() {
+        const id = $(this).data('id');
+        // alert(id);
+
+        Swal.fire({
+            title: "Anda ingin hapus?",
+            text: "Data terhapus tidak dapat kembali",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Hapus",
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/location-delete`,
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: () => {
+                        toastr.success('Berhasil hapus', 'Success');
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000);
+                    },
+                    error: (e) => {
+                        console.log(e)
+                    }
+
+                })
+            }
+        });
+
+    });
     </script>
 
 </body>

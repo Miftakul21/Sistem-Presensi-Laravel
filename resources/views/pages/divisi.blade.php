@@ -101,7 +101,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal Update</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Update</h5>
                     <a data-dismiss="modal" aria-label="Close"><i class="fas fa-times fa-1x"></i></a>
                 </div>
                 <div class="modal-body">

@@ -21,3 +21,5 @@ Route::post('/divisi-update', [DivisiController::class, 'update']);
 
 Route::get('/location', [LocationController::class, 'index']);
 Route::post('/location', [LocationController::class, 'insert']);
+Route::post('/location-delete', [LocationController::class, 'delete']);
+Route::post('/locaion-update', [LocationController::class, 'update']);
