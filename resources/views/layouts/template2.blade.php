@@ -59,7 +59,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -82,7 +82,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Data:</h6>
-                        <a class="collapse-item" href="buttons.html">Data Karyawan</a>
+                        <a class="collapse-item" href="/karyawan">Data Karyawan</a>
                         <a class="collapse-item" href="/divisi">Data Divisi</a>
                     </div>
                 </div>
@@ -103,18 +103,11 @@
                 Addons
             </div>
 
-            <!-- Nav Item - Charts -->
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="/location">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Lokasi</span></a>
-            </li> -->
-
-            <!-- Nav Item - Tables -->
+            <!-- Nav Item - Presensi -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                <a class="nav-link" href="/presensi">
+                    <i class="fas fa-book-reader"></i>
+                    <span>Presensi</span></a>
             </li>
 
             <!-- Divider -->
@@ -139,7 +132,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
                         <!-- <div class="topbar-divider d-none d-sm-block"></div> -->
 
                         <!-- Nav Item - User Information -->
@@ -148,7 +140,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
                                     class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="{{ asset('images/person.jpeg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -166,8 +158,9 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                <a class="dropdown-item text-danger" href="#" data-toggle="modal"
+                                    data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
                                     Logout
                                 </a>
                             </div>
@@ -202,6 +195,35 @@
 
     </div>
     <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">Anda ingin logout?</div>
+                <div class="modal-footer">
+                    <form method="POST" action="/logout" class="d-inline">
+                        @csrf
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary ml-2 bg-danger">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -291,7 +313,41 @@
                 })
             }
         });
+    });
 
+    $('#table-karyawan').on('click', '#btn-delete-karyawan', function() {
+        const id = $(this).data('id');
+
+        Swal.fire({
+            title: "Anda ingin hapus?",
+            text: "Data terhapus tidak dapat kembali",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Hapus",
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/karyawan-delete`,
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: () => {
+                        toastr.success('Berhasil hapus', 'Success');
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000);
+                    },
+                    error: (e) => {
+                        console.log(e)
+                    }
+
+                })
+            }
+        });
     });
     </script>
 

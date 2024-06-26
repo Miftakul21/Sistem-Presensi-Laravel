@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\LocationController;
@@ -11,8 +12,14 @@ use App\Http\Controllers\LocationController;
 Route::get('/', [AuthController::class, 'index']);
 
 Route::post('/auth-login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
+
+Route::get('/karyawan', [UserController::class, 'index']);
+Route::post('/karyawan', [UserController::class, 'insert']);
+Route::post('/karyawan-delete', [UserController::class, 'delete']);
+Route::post('/karyawan-update', [UserController::class, 'update']);
 
 Route::get('/divisi', [DivisiController::class, 'index']);
 Route::post('/divisi', [DivisiController::class, 'insert']);
