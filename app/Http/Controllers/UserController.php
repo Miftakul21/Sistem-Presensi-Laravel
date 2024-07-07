@@ -23,8 +23,18 @@ class UserController extends Controller
 
         $divisi = DB::table('divisi')->get();
         $karyawan = DB::table('users')->whereNotNull('role')->get();
+        $lokasi = DB::table('location')->get();
 
-        return view('pages.karyawan', ['role' => $role, 'roles' => $role, 'divisi' => $divisi, 'nip' => $nip, 'karyawan' => $karyawan]);
+
+        // $datas = $karyawan->map(function($karyawan) use ($lokasi) {
+        //     $karyawan->id_location = optional($lokasi->firstWhere('id', $karyawan->id_location))->lokasi;
+        //     return $karyawan;
+        // });
+
+        return view('pages.karyawan', [
+            'role' => $role, 'roles' => $role, 'divisi' => $divisi, 'nip' => $nip, 'karyawan' => $karyawan,
+            'lokasi' => $lokasi,
+        ]);
     }
 
     public function insert(Request $request)
@@ -48,8 +58,9 @@ class UserController extends Controller
             'alamat' => $request->alamat,
             'role' => $request->role,
             'divisi' => $request->divisi,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
+            'id_location' => $request->divisi
+            // 'created_at' => date('Y-m-d H:i:s'),
+            // 'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
         if($insert) {
@@ -76,6 +87,8 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->all());
+
         $request->validate([
             'id' => 'required|int',
             'name' => 'required|string',
@@ -93,8 +106,9 @@ class UserController extends Controller
             'alamat' => $request->alamat,
             'role' => $request->role,
             'divisi' => $request->divisi,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
+            'id_location' => $request->id_location,
+            // 'created_at' => date('Y-m-d H:i:s'),
+            // 'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
         if($update) {

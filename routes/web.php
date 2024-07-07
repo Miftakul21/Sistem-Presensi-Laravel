@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\PresensiController;
 
 
 Route::get('/', [AuthController::class, 'index']);
@@ -30,3 +31,8 @@ Route::get('/location', [LocationController::class, 'index']);
 Route::post('/location', [LocationController::class, 'insert']);
 Route::post('/location-delete', [LocationController::class, 'delete']);
 Route::post('/locaion-update', [LocationController::class, 'update']);
+
+Route::get('/presensi', [PresensiController::class, 'index']);
+Route::get('/get-location-office', [PresensiController::class, 'getLocation']);
+Route::post('/presensi-masuk', [PresensiController::class, 'presensiMasuk']);
+Route::post('/presensi-keluar', [PresensiController::class, 'presensiKeluar']);

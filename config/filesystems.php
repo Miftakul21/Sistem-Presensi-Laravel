@@ -15,6 +15,8 @@ return [
 
     'default' => env('FILESYSTEM_DISK', 'local'),
 
+    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -56,6 +58,19 @@ return [
             'throw' => false,
         ],
 
+        'public_images_presensi_masuk' => [
+            'driver' => 'local',
+            'root' => public_path('images/presensi_masuk'),
+            'url' => env('APP_URL').'/images/presensi_masuk',
+            'visibility' => 'public',
+        ],
+
+        'public_images_presensi_keluar' => [
+            'driver' => 'local',
+            'root' => public_path('images/presensi_keluar'),
+            'url' => env('APP_URL').'/images/presensi_keluar',
+            'visibility' => 'public',
+        ],
     ],
 
     /*

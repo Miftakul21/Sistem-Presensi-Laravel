@@ -40,7 +40,7 @@
                                 <td>Nama Perusahaan</td>
                                 <td>Tipe</td>
                                 <td>Latitude</td>
-                                <td>Longtitude</td>
+                                <td>Longitude</td>
                                 <td>Radius</td>
                                 <td>Zona</td>
                                 <td>Jam Masuk</td>
@@ -55,7 +55,7 @@
                                 <td>{{ $data->name }}</td>
                                 <td class="text-capitalize">{{ $data->tipe }}</td>
                                 <td>{{ $data->latitude }}</td>
-                                <td>{{ $data->longtitude }}</td>
+                                <td>{{ $data->longitude }}</td>
                                 <td>{{ $data->radius }}</td>
                                 <td>{{ $data->zona_waktu }}</td>
                                 <td>{{ $data->jam_masuk }}</td>
@@ -113,11 +113,11 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="longtitude" class="form-label font-weight-bold">Longtitude</label>
+                            <label for="longitude" class="form-label font-weight-bold">Longitude</label>
                             <input type="text" name="longtitude"
-                                class="form-control @error('longtitude') is-invalid  @enderror" id="longtitude"
-                                placeholder="Longtitude">
-                            @error('longtitude')
+                                class="form-control @error('longitude') is-invalid  @enderror" id="longitude"
+                                placeholder="Longitude">
+                            @error('longitude')
                             {{ $message }}
                             @enderror
                         </div>
@@ -214,10 +214,10 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="longtitude-update" class="form-label font-weight-bold">Longtitude</label>
-                        <input type="text" name="longtitude"
-                            class="form-control @error('longtitude') is-invalid  @enderror" id="longtitude-update"
-                            placeholder="Longtitude" value="{{ $data->longtitude }}">
+                        <label for="longitude-update" class="form-label font-weight-bold">Longitude</label>
+                        <input type="text" name="longitude"
+                            class="form-control @error('longitude') is-invalid  @enderror" id="longitude-update"
+                            placeholder="Longitude" value="{{ $data->longitude }}">
                         @error('longtitude')
                         {{ $message }}
                         @enderror

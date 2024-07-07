@@ -42,6 +42,7 @@
                                 <th>Alamat</th>
                                 <th>Role</th>
                                 <th>Divisi</th>
+                                <th>Lokasi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -56,6 +57,12 @@
                                 <td>{{ $data->alamat }}</td>
                                 <td class="text-capitalize">{{ $data->role }}</td>
                                 <td>{{ $data->divisi }}</td>
+                                <td>
+                                    @php
+                                    $lokasi_presensi = $lokasi->firstWhere('id', $data->id_location);
+                                    @endphp
+                                    {{ $lokasi_presensi->name ?? '' }}
+                                </td>
                                 <td class="d-flex ">
                                     <button class="btn btn-danger btn-sm" id="btn-delete-karyawan"
                                         data-id="{{ $data->id }}">Delete</button>
@@ -157,6 +164,16 @@
                             @enderror
                         </div>
                         <div class="mb-3">
+                            <label for="lokasi" class="form-label font-weight-bold">Lokasi</label>
+                            <select class="form-control @error('id_location') is-invalid @enderror" name="id_location"
+                                id="lokasi">
+                                <option value="">Pili lokasi</option>
+                                @foreach ($lokasi as $location)
+                                <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="password" class="form-label font-weight-bold">Password</label>
                             <input type="password" name="password"
                                 class="form-control @error('password') is-invalid @enderror" id="password"
@@ -193,7 +210,7 @@
             <div class="modal-body">
                 <form method="POST" action="/karyawan-update">
                     @csrf
-                    <input type="text" value="{{ $data->id }}" name="id">
+                    <input type="hidden" value="{{ $data->id }}" name="id">
                     <div class="mb-3">
                         <label for="nip-updae" class="form-label font-weight-bold">Nomor Induk Karyawan</label>
                         <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip"
@@ -279,6 +296,19 @@
                         @error('divisi')
                         {{ $message }}
                         @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="location-update" class="form-label font-weight-bold">Lokasi</label>
+                        <select class="form-control" name="id_location" id="location-update">
+                            <option value="">Pilih lokasi</option>
+                            @foreach ($lokasi as $lokasi_update)
+                            @if ($lokasi_update->id == $data->id_location)
+                            <option value="{{ $lokasi_update->id }}" selected>{{ $lokasi_update->name }}</option>
+                            @endif
+                            <option value="{{ $lokasi_update->id }}">{{ $lokasi_update->name }}</option>
+                            @endforeach
+                        </select>
+
                     </div>
                     <div class="d-flex align-items-center">
                         <button type="submit" class="btn btn-primary">Update</button>
