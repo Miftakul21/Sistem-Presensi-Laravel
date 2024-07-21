@@ -3,7 +3,15 @@
 @section('content')
 <div class="container">
     @if (session('error'))
-    <h1>{{ session('error') }}</h1>
+    <script>
+    Swal.fire({
+        position: "top-center",
+        icon: "error",
+        title: `{{session('error')}}`,
+        showConfirmButton: false,
+        timer: 1500
+    });
+    </script>
     @endif
 
     <!-- Outer Row -->

@@ -45,6 +45,10 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
+
     <!-- SetUp Headers -->
     <script>
     // Ajax setup
@@ -72,7 +76,6 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">Presensi Karyawan</div>
             </a>
-
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
@@ -127,6 +130,22 @@
                 <a class="nav-link" href="/presensi">
                     <i class="fas fa-book-reader"></i>
                     <span>Presensi</span></a>
+            </li>
+
+            <!-- Nav Item - Presensi -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="true" aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Rekap Presensi</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Rekap:</h6>
+                        <a class="collapse-item" href="/rekap-harian">Rekap Harian</a>
+                        <a class="collapse-item" href="/rekap-bulanan">Rekap Bulanan</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -254,7 +273,14 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
+    <!-- DataTables -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
     <script>
+    new DataTable('#example', {
+        // scrollX: true,
+    });
     $('#table-divisi').on('click', '#btn-delete-divisi', function() {
         const id = $(this).data('id');
         // alert(id);

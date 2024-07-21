@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\RekapPresensiController;
 
 
 Route::get('/', [AuthController::class, 'index']);
@@ -36,3 +37,8 @@ Route::get('/presensi', [PresensiController::class, 'index']);
 Route::get('/get-location-office', [PresensiController::class, 'getLocation']);
 Route::post('/presensi-masuk', [PresensiController::class, 'presensiMasuk']);
 Route::post('/presensi-keluar', [PresensiController::class, 'presensiKeluar']);
+
+Route::get('/rekap-harian', [RekapPresensiController::class, 'index']);
+Route::get('/rekap-bulanan', [RekapPresensiController::class, 'rekapBulanan']);
+Route::get('/rekap-laporan-harian', [RekapPresensiController::class, 'exportLaporanHarian']);
+Route::get('/rekap-laporan-bulanan', [RekapPresensiController::class, 'exportLaporanHarian']);
