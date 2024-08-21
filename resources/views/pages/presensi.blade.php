@@ -15,8 +15,6 @@
     }
 ?>
 
-{{ $cek_presensi_keluar }}
-
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->

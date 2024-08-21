@@ -17,8 +17,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            // Tambah kolom
+            $table->string('nip', 10);
+            $table->string('nomor_telepon', 20)->nullable();
+            $table->string('alamat', 120)->nullable();
+            $table->string('role', 50)->nullable();
+            $table->string('divisi', 100)->nullable();
             $table->rememberToken();
-            $table->timestamps();
+
+            // Foreign key location id
+            // $table->foreign('id_location')->references('id')->on('location')->onDelete('cascade');
         });
     }
 

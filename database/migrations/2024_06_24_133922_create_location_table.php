@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->enum('tipe', ['pusat', 'cabang']);
             $table->string('latitude');
-            $table->string('longtitude');
+            $table->string('longitude');
             $table->integer('radius');
             $table->enum('zona_waktu', ['WIB', 'WITA', 'WIT']);
             $table->string('jam_masuk', 30);

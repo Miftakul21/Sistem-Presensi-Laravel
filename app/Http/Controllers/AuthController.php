@@ -27,9 +27,11 @@ class AuthController extends Controller
         if($user && Hash::check($credential['password'], $user->password)) {
             Auth::login($user);
             return redirect()->intended('/dashboard')->with('success', 'Login Berhasil');
+        } else {
+            return redirect()->back()->with('error', 'Akun tidak terdaftar');
         }
-
-        return redirect()->back()->with('error', 'Email Atau Password Salah!');
+        
+        return redirect()->back()->with('error', 'Email atau password salah!');   
     }
 
     public function logout(Request $request) 

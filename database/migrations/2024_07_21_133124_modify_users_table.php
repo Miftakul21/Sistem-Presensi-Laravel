@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function(Blueprint $table) {
-            // Hapus kolom
-            // $table->dropTimestamps();
-
-            $table->char('id_location', 6)->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('id_location')->nullable();
             $table->timestamps();
+
+            $table->foreign('id_location')->references('id')->on('location')->onDelete('cascade');
         });
     }
 
@@ -25,8 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Scheme::table('users', function(Blueprint $table) {
-
-        }); 
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

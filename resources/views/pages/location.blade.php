@@ -9,31 +9,13 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Lokasi Perusahaan</h1>
     </div>
-
-    <!-- Alert crud -->
-    @if (session('error'))
-    <script>
-    Swal.fire({
-        title: "Error",
-        text: "{{ session('error') }}",
-        icon: "error"
-    });
-    </script>
-    @endif
-
-    @if (session('success'))
-    <script>
-    toastr.success("{{ session('success') }}", "Success");
-    </script>
-    @endif
-
     <!-- End alert -->
 
     <div class="row mb-5">
         <div class="col-8">
             <div class="card shadow-sm">
                 <div class="card-body table-responsive">
-                    <table class="table table-hover" id="table-location">
+                    <table class="table table-hover table-location" id="example" width="100%">
                         <thead class="bg-primary text-white">
                             <tr class="text-center">
                                 <td>No</td>
@@ -85,7 +67,7 @@
                         <div class="mb-3">
                             <label for="perusahaan" class="form-label font-weight-bold">Perusahaan</label>
                             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                id="perusahaan" placeholder="Nama Perusahaan">
+                                id="perusahaan" placeholder="Nama Perusahaan" value="{{ old('name') }}">
                             @error('name')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -96,8 +78,8 @@
                             <label for="tipe" class="form-label font-weight-bold">Tipe</label>
                             <select class="form-control @error('tipe') is-invalid  @enderror" name="tipe" id="tipe">
                                 <option value="">Pilih Tipe</option>
-                                <option value="Pusat">Pusat</option>
-                                <option value="Cabang">Cabang</option>
+                                <option value="Pusat" {{ old('tipe') == 'Pusat' ? 'selected' : '' }}>Pusat</option>
+                                <option value="Cabang" {{ old('tipe') == 'Cabang' ? 'selected' : '' }}>Cabang</option>
                             </select>
                             @error('tipe')
                             {{ $message }}
@@ -107,24 +89,25 @@
                             <label for="latitude" class="form-label font-weight-bold">Latitude</label>
                             <input type="text" name="latitude"
                                 class="form-control @error('latitude') is-invalid @enderror" id="latitude"
-                                placeholder="Latitude">
+                                placeholder="Latitude" value="{{ old('latitude') }}">
                             @error('laitude')
                             {{ $message }}
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="longitude" class="form-label font-weight-bold">Longitude</label>
-                            <input type="text" name="longtitude"
+                            <input type="text" name="longitude"
                                 class="form-control @error('longitude') is-invalid  @enderror" id="longitude"
-                                placeholder="Longitude">
+                                placeholder="Longitude" value="{{ old('longitude') }}">
                             @error('longitude')
                             {{ $message }}
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="radius" class="form-label font-weight-bold">Radius</label>
-                            <input type="text" name="radius" class="form-control @error('radius') is-invalid @enderror"
-                                id="radius" placeholder="Radius">
+                            <input type="text" inputmode="numeric" name="radius"
+                                class="form-control @error('radius') is-invalid @enderror" id="radius"
+                                placeholder="Radius">
                             @error('radius')
                             {{ $message }}
                             @enderror
@@ -134,9 +117,9 @@
                             <select class="form-control @error('zona_waktu') is-invalid @enderror" name="zona_waktu"
                                 id="zona">
                                 <option value="">Pilih Zona</option>
-                                <option value="WIB">WIB</option>
-                                <option value="WITA">WITA</option>
-                                <option value="WIT">WIT</option>
+                                <option value="WIB" {{ old('zona_waktu') == 'WIB' ? 'selected' : ''}}>WIB</option>
+                                <option value="WITA" {{ old('zona_waktu') == 'WITA' ? 'selected' : '' }}>WITA</option>
+                                <option value="WIT" {{ old('WIT') == 'WIT' ? 'selected' : '' }}>WIT</option>
                             </select>
                             @error('zona_waktu')
                             {{ $message }}
@@ -145,7 +128,8 @@
                         <div class="mb-3">
                             <label for="jam_masuk" class="form-label font-weight-bold">Waktu Masuk</label>
                             <input type="time" name="jam_masuk"
-                                class="form-control @error('jam_masuk') is-invalid @enderror" id="jam_masuk">
+                                class="form-control @error('jam_masuk') is-invalid @enderror" id="jam_masuk"
+                                value="{{ old('jam_masuk') }}">
                             @error('jam_masuk')
                             {{ $message }}
                             @enderror
@@ -153,7 +137,8 @@
                         <div class="mb-3">
                             <label for="jam_keluar" class="form-label font-weight-bold">Waktu Keluar</label>
                             <input type="time" name="jam_keluar"
-                                class="form-control @error('jam_keluar') is-invalid @enderror" id="jam_keluar">
+                                class="form-control @error('jam_keluar') is-invalid @enderror" id="jam_keluar"
+                                value="{{ old('jam_keluar')}}">
                             @error('jam_keluar')
                             {{ $message }}
                             @enderror
@@ -181,7 +166,7 @@
                 <a data-dismiss="modal" aria-label="Close"><i class="fas fa-times fa-1x"></i></a>
             </div>
             <div class="modal-body">
-                <form method="POST" action="/locaion-update">
+                <form method="POST" action="/location-update">
                     @csrf
                     <input type="hidden" value="{{ $data->id }}" name="id">
                     <div class="mb-3">

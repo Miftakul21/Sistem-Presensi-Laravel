@@ -9,6 +9,7 @@ use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\RekapPresensiController;
+use App\Http\Controllers\KetidakhadiranController;
 
 
 Route::get('/', [AuthController::class, 'index']);
@@ -42,3 +43,13 @@ Route::get('/rekap-harian', [RekapPresensiController::class, 'index']);
 Route::get('/rekap-bulanan', [RekapPresensiController::class, 'rekapBulanan']);
 Route::get('/rekap-laporan-harian', [RekapPresensiController::class, 'exportLaporanHarian']);
 Route::get('/rekap-laporan-bulanan', [RekapPresensiController::class, 'exportLaporanHarian']);
+
+Route::get('/ketidakhadiran', [KetidakhadiranController::class, 'index']);
+Route::post('/ketidakhadiran', [KetidakhadiranController::class, 'insert']);
+Route::post('/ketidakhadiran-update', [KetidakhadiranController::class, 'update']);
+Route::post('/ketidakhadiran-delete', [KetidakhadiranController::class, 'delete']);
+
+Route::get('/data-ketidakhadiran', [KetidakhadiranController::class, 'getDataKetidakhadiran']);
+Route::post('/status-ketidakhadiran', [KetidakhadiranController::class, 'statusKetidakhadiran']);
+
+Route::get('/profile', [UserController::class, 'profile']);

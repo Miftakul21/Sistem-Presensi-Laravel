@@ -10,33 +10,6 @@
         <h1 class="h3 mb-0 text-gray-800">Divisi</h1>
     </div>
 
-    <!-- Alert crud -->
-
-    @if (session('error'))
-    <script>
-    Swal.fire({
-        title: "Error",
-        text: "{{ session('error') }}",
-        icon: "error"
-    });
-    </script>
-    @endif
-
-    @error('divisi')
-    <script>
-    Swal.fire({
-        title: "Error",
-        text: "{{ $message }}",
-        icon: "error"
-    });
-    </script>
-    @enderror
-
-    @if (session('success'))
-    <script>
-    toastr.success("{{ session('success') }}", "Success");
-    </script>
-    @endif
 
     <!-- End alert -->
 

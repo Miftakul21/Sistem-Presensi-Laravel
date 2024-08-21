@@ -25,12 +25,6 @@ class UserController extends Controller
         $karyawan = DB::table('users')->whereNotNull('role')->get();
         $lokasi = DB::table('location')->get();
 
-
-        // $datas = $karyawan->map(function($karyawan) use ($lokasi) {
-        //     $karyawan->id_location = optional($lokasi->firstWhere('id', $karyawan->id_location))->lokasi;
-        //     return $karyawan;
-        // });
-
         return view('pages.karyawan', [
             'role' => $role, 'roles' => $role, 'divisi' => $divisi, 'nip' => $nip, 'karyawan' => $karyawan,
             'lokasi' => $lokasi,
@@ -58,9 +52,9 @@ class UserController extends Controller
             'alamat' => $request->alamat,
             'role' => $request->role,
             'divisi' => $request->divisi,
-            'id_location' => $request->divisi
-            // 'created_at' => date('Y-m-d H:i:s'),
-            // 'updated_at' => date('Y-m-d H:i:s'),
+            'id_location' => $request->id_location,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
         if($insert) {
@@ -107,8 +101,8 @@ class UserController extends Controller
             'role' => $request->role,
             'divisi' => $request->divisi,
             'id_location' => $request->id_location,
-            // 'created_at' => date('Y-m-d H:i:s'),
-            // 'updated_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
         if($update) {
@@ -116,5 +110,10 @@ class UserController extends Controller
         }
 
         return redirect('/karyawan')->with(['error' => 'Gagal update']);
+    }
+
+    public function profile()
+    {
+        return view('pages.profile');
     }
 }

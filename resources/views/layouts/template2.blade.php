@@ -31,8 +31,8 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
 
     <!-- Toastr -->
-    <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
-    <script src="{{ asset('js/toastr.js') }}"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> -->
+
 
     <!-- Webcam  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
@@ -51,12 +51,7 @@
 
     <!-- SetUp Headers -->
     <script>
-    // Ajax setup
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        },
-    });
+
     </script>
 
 </head>
@@ -79,6 +74,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+            @if (Auth::user()->role == 'admin')
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="/dashboard">
@@ -128,7 +124,7 @@
             <!-- Nav Item - Presensi -->
             <li class="nav-item">
                 <a class="nav-link" href="/presensi">
-                    <i class="fas fa-book-reader"></i>
+                    <i class="fas fa-clipboard-list"></i>
                     <span>Presensi</span></a>
             </li>
 
@@ -147,6 +143,58 @@
                     </div>
                 </div>
             </li>
+
+            <!-- Nav Item - Ketidakhadiran -->
+            <li class="nav-item">
+                <a class="nav-link" href="/ketidakhadiran">
+                    <i class="fas fa-user-tag"></i>
+                    <span>Ketidakhadiran</span></a>
+            </li>
+
+            <!-- Nav Item - Ketidakhadiran -->
+            <li class="nav-item">
+                <a class="nav-link" href="/data-ketidakhadiran">
+                    <i class="fas fa-user-tag"></i>
+                    <span>Data Ketidakhadiran</span></a>
+            </li>
+            @endif
+
+            @if (Auth::user()->role != 'admin')
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            <!-- Nav Item - Presensi -->
+            <li class="nav-item">
+                <a class="nav-link" href="/presensi">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Presensi</span></a>
+            </li>
+
+            <!-- Nav Item - Presensi -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="true" aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Rekap Presensi</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Rekap:</h6>
+                        <a class="collapse-item" href="/rekap-harian">Rekap Harian</a>
+                        <a class="collapse-item" href="/rekap-bulanan">Rekap Bulanan</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Ketidakhadiran -->
+            <li class="nav-item">
+                <a class="nav-link" href="/ketidakhadiran">
+                    <i class="fas fa-user-tag"></i>
+                    <span>Ketidakhadiran</span></a>
+            </li>
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -183,17 +231,13 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/profile">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Ubah Password
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item text-danger" href="#" data-toggle="modal"
@@ -277,9 +321,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+
+    <!-- Toastr -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
+
+    @if (session('success'))
     <script>
+    Swal.fire({
+        title: "Success",
+        text: "{{ session('success') }}",
+        icon: "success"
+    });
+    </script>
+    @endif
+
+    @if(session('error'))
+    <script>
+    Swal.fire({
+        title: "Error",
+        text: "{{ session('error') }}",
+        icon: "error"
+    });
+    </script>
+    @endif
+
+    <script>
+    // Ajax setup
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        },
+    });
     new DataTable('#example', {
-        // scrollX: true,
+        scrollX: true,
     });
     $('#table-divisi').on('click', '#btn-delete-divisi', function() {
         const id = $(this).data('id');
@@ -302,7 +376,11 @@
                         id: id,
                     },
                     success: () => {
-                        toastr.success('Berhasil hapus', 'Success');
+                        Swal.fire({
+                            title: "Success",
+                            text: "Berhasil hapus",
+                            icon: "success"
+                        });
                         setTimeout(() => {
                             window.location.reload()
                         }, 2000);
@@ -317,9 +395,8 @@
 
     });
 
-    $('#table-location').on('click', '#btn-delete-location', function() {
+    $('.table-location').on('click', '#btn-delete-location', function() {
         const id = $(this).data('id');
-        // alert(id);
 
         Swal.fire({
             title: "Anda ingin hapus?",
@@ -339,7 +416,11 @@
                         id: id,
                     },
                     success: () => {
-                        toastr.success('Berhasil hapus', 'Success');
+                        Swal.fire({
+                            title: "Success",
+                            text: "Berhasil hapus",
+                            icon: "success"
+                        });
                         setTimeout(() => {
                             window.location.reload()
                         }, 2000);
@@ -353,7 +434,46 @@
         });
     });
 
-    $('#table-karyawan').on('click', '#btn-delete-karyawan', function() {
+    $('.table-ketidakhadiran').on('click', '#btn-delete-ketidakhadiran', function() {
+        const id = $(this).data('id');
+
+        Swal.fire({
+            title: "Anda ingin hapus?",
+            text: "Data terhapus tidak dapat kembali",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Hapus",
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/ketidakhadiran-delete`,
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: () => {
+                        Swal.fire({
+                            title: "Success",
+                            text: "Berhasil hapus",
+                            icon: "success"
+                        });
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000);
+                    },
+                    error: (e) => {
+                        console.log(e)
+                    }
+
+                })
+            }
+        });
+    });
+
+    $('.table-karyawan').on('click', '#btn-delete-karyawan', function() {
         const id = $(this).data('id');
 
         Swal.fire({
@@ -374,7 +494,11 @@
                         id: id,
                     },
                     success: () => {
-                        toastr.success('Berhasil hapus', 'Success');
+                        Swal.fire({
+                            title: "Success",
+                            text: "Berhasil hapus",
+                            icon: "success"
+                        });
                         setTimeout(() => {
                             window.location.reload()
                         }, 2000);

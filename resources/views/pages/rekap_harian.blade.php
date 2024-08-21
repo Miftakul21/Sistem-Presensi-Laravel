@@ -40,7 +40,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body table-responsive">
-                    <table class="table table-hover" id="example">
+                    <table class="table table-hover" id="example" width="100%">
                         <thead class="bg-primary text-white font-weight-bold">
                             <tr>
                                 <th>No</th>

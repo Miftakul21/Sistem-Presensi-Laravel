@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('presensi', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user')->unsigned()->index()->nullable(); // nanti ya
-            $table->date('tanggal_masuk')->nullable();
-            $table->time('jam_masuk')->nullable();
-            $table->string('foto_masuk', 100);
+            $table->unsignedBigInteger('id_user');
+            $table->date('tanggal_masuk');
+            $table->time('jam_masuk');
+            $table->string('foto_masuk', 125);
             $table->date('tanggal_keluar')->nullable();
             $table->time('jam_keluar')->nullable();
-            $table->string('foto_keluar')->nullable();
+            $table->string('foto_keluar', 125)->nullable();
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

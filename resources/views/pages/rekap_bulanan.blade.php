@@ -16,8 +16,8 @@
         <div class="col-2">
             <form action="/rekap-laporan-bulanan" method="GET">
                 @csrf
-                <input type="text" name="month" id="getMonth" value="{{ $month }}">
-                <input type="text" name="year" id="getYear" value="{{ $year }}">
+                <input type="hidden" name="month" id="getMonth" value="{{ $month }}">
+                <input type="hidden" name="year" id="getYear" value="{{ $year }}">
                 <button class="btn btn-success">Export Excel</button>
             </form>
         </div>
@@ -51,15 +51,13 @@
                 </div>
             </form>
         </div>
-
-
     </div>
 
     <div class="row  mt-2">
         <div class="col-12">
             <div class="card">
                 <div class="card-body table-responsive">
-                    <table class="table table-hover" id="example">
+                    <table class="table table-hover" id="example" width="100%">
                         <thead class="bg-primary text-white font-weight-bold">
                             <tr>
                                 <th>No</th>

@@ -9,30 +9,12 @@
         <h1 class="h3 mb-0 text-gray-800">Karyawan</h1>
     </div>
 
-    <!-- Alert crud -->
-    @if (session('error'))
-    <script>
-    Swal.fire({
-        title: "Error",
-        text: "{{ session('error') }}",
-        icon: "error"
-    });
-    </script>
-    @endif
-
-    @if (session('success'))
-    <script>
-    toastr.success("{{ session('success') }}", "Success");
-    </script>
-    @endif
-    <!-- End alert -->
-
     <div class="row">
         <div class="col-8">
             <div class="card shadow-sm">
                 <div class="card-body table-responsive">
-                    <table class="table table-hover" id="table-karyawan">
-                        <thead class="bg-primary text-white ">
+                    <table class="table table-karyawan" id="example" width="100%">
+                        <thead class="bg-primary">
                             <tr>
                                 <th>No</th>
                                 <th>NIP</th>
@@ -63,7 +45,7 @@
                                     @endphp
                                     {{ $lokasi_presensi->name ?? '' }}
                                 </td>
-                                <td class="d-flex ">
+                                <td class="d-flex">
                                     <button class="btn btn-danger btn-sm" id="btn-delete-karyawan"
                                         data-id="{{ $data->id }}">Delete</button>
                                     <button class="btn btn-warning btn-sm ml-2" data-toggle="modal"
@@ -87,7 +69,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="nip" class="form-label font-weight-bold">Nomor Induk Karyawan</label>
-                            <input type="text" nip="nip" class="form-control @error('nip') is-invalid @enderror"
+                            <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror"
                                 id="perusahaan" value="{{ $nip }}" disabled>
                             <input type="hidden" value="{{ $nip }}" name="nip">
                             @error('nip')
@@ -99,7 +81,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label font-weight-bold">Nama</label>
                             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                id="name" placeholder="Nama">
+                                id="name" placeholder="Nama" value="{{ old('name') }}">
                             @error('name')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -109,7 +91,7 @@
                         <div class="mb-3">
                             <label for="email" class="form-label font-weight-bold">Email</label>
                             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                                id="email" placeholder="Email">
+                                id="email" placeholder="Email" value="{{ old('email') }}">
                             @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -120,7 +102,7 @@
                             <label for="nomor_telepon" class="form-label font-weight-bold">Nomor Telepon</label>
                             <input type="nomor_telepon" name="nomor_telepon"
                                 class="form-control @error('nomor_telepon') is-invalid @enderror" id="nomor_telepon"
-                                placeholder="Nomor telepon">
+                                placeholder="Nomor telepon" value="{{ old('nomor_telepon') }}">
                             @error('nomor_telepon')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -130,7 +112,7 @@
                         <div class="mb-3">
                             <label for="alamat" class="form-label font-weight-bold">Alamat</label>
                             <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror"
-                                id="alamat" placeholder="Alamat">
+                                id="alamat" placeholder="Alamat" value="{{ old('alamat') }}">
                             @error('alamat')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -150,7 +132,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="divisi" class="form-label font-weight-bold">divisi</label>
+                            <label for="divisi" class="form-label font-weight-bold">Divisi</label>
                             <select class="form-control @error('divisi') is-invalid @enderror" name="divisi"
                                 id="divisi">
                                 <option value="">Pilih divisi</option>

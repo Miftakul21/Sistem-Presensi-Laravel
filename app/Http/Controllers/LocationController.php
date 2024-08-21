@@ -20,7 +20,7 @@ class LocationController extends Controller
             'name' => 'required|string',
             'tipe' => 'required|string',
             'latitude' => 'required|string',
-            'longtitude' => 'required|string',
+            'longitude' => 'required|string',
             'radius' => 'required|int',
             'zona_waktu' => 'required|string',
             'jam_masuk' => 'required|string',
